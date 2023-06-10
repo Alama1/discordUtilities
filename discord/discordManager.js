@@ -32,8 +32,8 @@ class DiscordManager {
         if (!this.shouldReply(message)) return
         const content = message.content.replaceAll(/<@!*&*[0-9]+>/gm, '')
         if (!content) return
-        const AIReply = await this.app.ai.getMessageFromAi(content)
-        message.reply(AIReply.text.split('\n')[0])
+        const AIReply = await this.app.ai.getMessageFromAi(`${message.author.username}: ${content}`)
+        message.reply(AIReply.text)
     }
 
     shouldReply(message) {
