@@ -3,11 +3,12 @@ class watchAvatarCommand {
 
     constructor(discord) {
         this.discord = discord
-        this.name = 'unwatchavatar'
+        this.name = 'watchavatar'
     }
 
     async onCommand(interaction) {
         const userID = this.getDataFromInteraction(interaction)
+        console.log(userID)
         if (!this.discord.app.config.properties.avatarWatchList.hasOwnProperty(userID)) {
             const returnEmbed = new EmbedBuilder()
                 .setTitle('Error!')
