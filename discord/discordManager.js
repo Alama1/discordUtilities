@@ -38,6 +38,7 @@ class DiscordManager {
         const guild = await this.client.guilds.fetch(this.app.config.properties.discord.guildID)
         const usersToCheck = this.app.config.properties.avatarWatchList
         const userIDs = Object.keys(usersToCheck)
+        console.log(`Checking avatars ${Date.now().toString()} for users: ${userIDs.join(' ')}`)
         for (let user of userIDs) {
             const currentUser = (await guild.members.fetch(user)).user
             const oldAV = usersToCheck[user].avatar
