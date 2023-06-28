@@ -1,5 +1,6 @@
 const { EmbedBuilder } = require('discord.js')
-class UnwatchAvatarCommand {
+class unwatchAvatarCommand {
+
     constructor(discord) {
         this.discord = discord
         this.name = 'unwatchavatar'
@@ -7,20 +8,24 @@ class UnwatchAvatarCommand {
 
     async onCommand(interaction) {
         const userID = this.getDataFromInteraction(interaction)
-        const guild = await this.discord.client.guilds.fetch(this.discord.app.config.properties.discord.guildID)
-        const user = await guild.members.fetch(userID)
-        const userAV = user.user.avatar
+        console.log(userID)
+        if (!this.discord.app.config.properties.avatarWatchList.hasOwnProperty(userID)) {
+            const returnEmbed = new EmbedBuilder()
+                .setTitle('Error!')
+                .setDescription(`Аватарка этого пользователя не отслеживается.`)
+                .setColor('#ff2222')
+            interaction.editReply({
+                embeds: [returnEmbed],
+                ephemeral: false
+            })
+            return
+        }
 
-        if (this.isAlreadyWatched(userID, interaction)) return
-
-        this.discord.app.config.properties.avatarWatchList[userID] = { avatar: userAV }
-        this.discord.app.config.saveAvatarsToConfig()
-
-
+        delete this.discord.app.config.properties.avatarWatchList[userID]
         const returnEmbed = new EmbedBuilder()
         returnEmbed
             .setTitle('Done!')
-            .setDescription(`Аватар пользователя добавлен к отслеживаемым.`)
+            .setDescription(`Аватар пользователя удален из отслеживаемых.`)
             .setColor('#00c2ff')
         interaction.editReply({
             embeds: [returnEmbed],
@@ -34,21 +39,7 @@ class UnwatchAvatarCommand {
 
         return userID
     }
-
-    isAlreadyWatched(userID, interaction) {
-        if (this.discord.app.config.properties.avatarWatchList.hasOwnProperty(userID)) {
-            const returnEmbed = new EmbedBuilder()
-                .setTitle('Error!')
-                .setDescription(`Аватарка этого пользователя уже отслеживается.`)
-                .setColor('#ff2222')
-            interaction.editReply({
-                embeds: [returnEmbed],
-                ephemeral: false
-            })
-            return true
-        } return false
-    }
 }
 
 
-module.exports = UnwatchAvatarCommand
+module.exports = unwatchAvatarCommand
