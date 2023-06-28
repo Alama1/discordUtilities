@@ -1,4 +1,6 @@
-const {GatewayIntentBits, Client} = require('discord.js')
+const {GatewayIntentBits, Client, EmbedBuilder} = require('discord.js')
+const InteractionHandler = require('./handlers/interactionHandler')
+const schedule = require('node-schedule')
 
 class DiscordManager {
     constructor(app) {
@@ -16,9 +18,14 @@ class DiscordManager {
 
         this.client.on('ready', () => {
             console.log(`${this.client.user.tag} is ready!`)
+            this.interactionHandler = new InteractionHandler(this)
+            this.watchAvatars()
+            schedule.scheduleJob('*/1 * * * *', () => { this.watchAvatars() })
         })
 
-        this.client.on('messageCreate', message => this.onMessage(message))
+        this.client.on('interactionCreate', interaction => {
+            this.interactionHandler.onInteraction(interaction)
+        })
         this.client.login(this.app.config.properties.discord.token)
             .catch(error => {
                 this.app.log.error(error)
@@ -27,21 +34,28 @@ class DiscordManager {
             })
 
     }
+    async watchAvatars() {
+        const guild = await this.client.guilds.fetch(this.app.config.properties.discord.guildID)
+        const usersToCheck = this.app.config.properties.avatarWatchList
+        const userIDs = Object.keys(usersToCheck)
+        for (let user of userIDs) {
+            const currentUser = (await guild.members.fetch(user)).user
+            const oldAV = usersToCheck[user].avatar
 
-    async onMessage(message) {
-        if (!this.shouldReply(message)) return
-        const content = message.content.replaceAll(/<@!*&*[0-9]+>/gm, '')
-        if (!content) return
-        const AIReply = await this.app.ai.getMessageFromAi(`${message.author.username}: ${content}`)
-        message.reply(AIReply.text)
-    }
+            if (currentUser.avatar === oldAV) continue
 
-    shouldReply(message) {
-        if(message.mentions.repliedUser) {
-            if(message.mentions.repliedUser.id === this.client.user.id) return true
+            this.app.config.properties.avatarWatchList[user] = { avatar: currentUser.avatar }
+            this.app.config.saveAvatarsToConfig()
+            const newAVURL = (await guild.members.fetch(user)).displayAvatarURL({ size: 4096, dynamic: true })
+            const channel = await this.client.channels.fetch(this.app.config.properties.discord.chatID)
+            const avatarEmbed = new EmbedBuilder()
+                .setTitle(currentUser.username)
+                .setDescription(`<@${user}> изменил аватарку!`)
+                .setImage(newAVURL)
+                .setColor('#2335ff');
+            channel.send({ embeds: [avatarEmbed]})
+
         }
-
-        return message.content.includes(this.client.user.id)
     }
 }
 
