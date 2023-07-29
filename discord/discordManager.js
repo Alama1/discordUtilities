@@ -1,5 +1,6 @@
 const {GatewayIntentBits, Client, EmbedBuilder} = require('discord.js')
 const InteractionHandler = require('./handlers/interactionHandler')
+const MessageHandler = require('./handlers/messageHandler')
 const getColors = require('get-image-colors')
 
 class DiscordManager {
@@ -19,6 +20,7 @@ class DiscordManager {
         this.client.on('ready', () => {
             console.log(`${this.client.user.tag} is ready!`)
             this.interactionHandler = new InteractionHandler(this)
+            this.messageHandler = new MessageHandler(this)
 
             this.watchAvatars()
             setInterval(async () => {
@@ -28,8 +30,12 @@ class DiscordManager {
 
         this.client.on('interactionCreate', interaction => {
             this.interactionHandler.onInteraction(interaction)
-
         })
+
+        this.client.on('messageCreate', message => {
+            this.messageHandler.onMessage(message)
+        })
+
         this.client.login(this.app.config.properties.discord.token)
             .catch(error => {
                 console.error(error)
