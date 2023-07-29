@@ -18,8 +18,8 @@ class Config {
     }
 
     saveAvatarsToConfig() {
-        fs.writeFileSync('./avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList), err => {
-            console.log(err)
+        fs.writeFile('./avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList), (err) => {
+            if (err) console.error(err)
         })
     }
 }
