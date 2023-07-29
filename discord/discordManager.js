@@ -1,12 +1,13 @@
 const {GatewayIntentBits, Client, EmbedBuilder} = require('discord.js')
 const InteractionHandler = require('./handlers/interactionHandler')
+const getColors = require('get-image-colors')
 
 class DiscordManager {
     constructor(app) {
         this.app = app
     }
 
-    connect() {
+    async connect() {
         this.client = new Client({
             intents: [
                 GatewayIntentBits.Guilds,
@@ -19,6 +20,7 @@ class DiscordManager {
             console.log(`${this.client.user.tag} is ready!`)
             this.interactionHandler = new InteractionHandler(this)
 
+            this.watchAvatars()
             setInterval(async () => {
                 await this.watchAvatars()
             }, 60000)
@@ -26,10 +28,11 @@ class DiscordManager {
 
         this.client.on('interactionCreate', interaction => {
             this.interactionHandler.onInteraction(interaction)
+
         })
         this.client.login(this.app.config.properties.discord.token)
             .catch(error => {
-                this.app.log.error(error)
+                console.error(error)
 
                 process.exit(1)
             })
@@ -53,10 +56,22 @@ class DiscordManager {
                 .setTitle(currentUser.username)
                 .setDescription(`<@${userID}> изменил аватарку!`)
                 .setImage(newAVURL)
-                .setColor('#2335ff');
+                .setColor(await this.getAvatarColors(newAVURL));
             channel.send({ embeds: [avatarEmbed]})
 
         }
+    }
+
+    async getAvatarColors(url) {
+        let colors
+        try{
+            colors = await getColors(url)
+        } catch (e) {
+            console.error(e)
+            return '#1b59ff'
+        }
+        if (colors.length === 0 || !colors[0].hasOwnProperty('_rgb')) return '#1b59ff'
+        return [colors[0]._rgb[0], colors[0]._rgb[1], colors[0]._rgb[2]]
     }
 }
 
