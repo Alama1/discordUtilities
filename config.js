@@ -18,7 +18,7 @@ class Config {
     }
 
     saveAvatarsToConfig() {
-        fs.writeFileSync('avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList),{encoding: "utf8"})
+        fs.writeFileSync(__dirname + '/avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList),{encoding: "utf8"})
     }
 }
 
