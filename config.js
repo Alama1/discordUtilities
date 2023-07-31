@@ -18,9 +18,10 @@ class Config {
     }
 
     saveAvatarsToConfig() {
-        fs.writeFile('./avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList), (err) => {
+        fs.writeFile('avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList),{encoding: "utf8"}, (err) => {
             if (err) console.error(err)
         })
+        console.log('Avatar to watch saved!')
     }
 }
 

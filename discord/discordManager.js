@@ -17,7 +17,6 @@ class DiscordManager {
             ]
         })
 
-        this.app.config.saveAvatarsToConfig()
         this.client.on('ready', () => {
             console.log(`${this.client.user.tag} is ready!`)
             this.interactionHandler = new InteractionHandler(this)

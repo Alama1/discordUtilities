@@ -11,7 +11,7 @@ class MessageHandler {
     }
 
     reactToMessage(message) {
-        const emojisnop = [":tulpa:1113099152390377523", ":ok:1113101186824933457", ":thumbsup_tone5:", "<:rofl:1130622489098207413>"];
+        const emojisnop = [":tulpa:1113099152390377523", ":ok:1113101186824933457", "<:rofl:1130622489098207413>"];
         let emojirandom
         if (message) {
             emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
