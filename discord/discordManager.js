@@ -79,6 +79,7 @@ class DiscordManager {
         if (colors.length === 0 || !colors[0].hasOwnProperty('_rgb')) return '#1b59ff'
         return [colors[0]._rgb[0], colors[0]._rgb[1], colors[0]._rgb[2]]
     }
+
 }
 
 module.exports = DiscordManager

@@ -15,6 +15,7 @@ class MessageHandler {
         let emojirandom
         if (message) {
             emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
+            console.log(emojirandom)
             message.react(emojirandom)
         }
     }
