@@ -1,1 +1,33 @@
-{"discord":{"chatID":"398082454532915201","guildID":"234041538617933824","reactionChance":0.995,"token":"MTExNjkwODczOTM1MDUwNzYzMQ.GVVBrn._46pMRVxoTj92vupOKBa1J79BS4uNIhMYfqxqY"},"avatarWatchList":{"1116908739350507631":{"avatar":"f177e541e7098b6c3c034b1a595667b1"},"296256874976903168":{"avatar":"2a59baaf7eab41b18f2bcb252cb664f9"},"310848622642069504":{"avatar":"1f027527f6cdaffac086c80f8e0ffce1"},"352854787068395522":{"avatar":"f0e8d91616eb4c6f7894ebb970800421"},"230037828325605376":{"avatar":"dd3f1d1889ea0a6c1a2e715a29c9fca9"}},"emojisToUse":[":tulpa:1113099152390377523",":ok:1113101186824933457",":rofl:1130622489098207413",":wat:834822837386739755",":soopmoji3:1113101919506939908",":soopmoji3:1113101919506939908",":2880boykisser:1113101901521748048"]}
+{
+  "discord": {
+    "chatID": "398082454532915201",
+    "guildID": "234041538617933824",
+    "reactionChance": 0.995
+  },
+  "avatarWatchList": {
+    "1116908739350507631": {
+      "avatar": "f177e541e7098b6c3c034b1a595667b1"
+    },
+    "296256874976903168": {
+      "avatar": "2a59baaf7eab41b18f2bcb252cb664f9"
+    },
+    "310848622642069504": {
+      "avatar": "1f027527f6cdaffac086c80f8e0ffce1"
+    },
+    "352854787068395522": {
+      "avatar": "f0e8d91616eb4c6f7894ebb970800421"
+    },
+    "230037828325605376": {
+      "avatar": "dd3f1d1889ea0a6c1a2e715a29c9fca9"
+    }
+  },
+  "emojisToUse": [
+    ":tulpa:1113099152390377523",
+    ":ok:1113101186824933457",
+    ":rofl:1130622489098207413",
+    ":wat:834822837386739755",
+    ":soopmoji3:1113101919506939908",
+    ":soopmoji3:1113101919506939908",
+    ":2880boykisser:1113101901521748048"
+  ]
+}

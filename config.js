@@ -20,6 +20,7 @@ class Config {
     }
 
     saveWholeConfig() {
+        delete this.properties.discord.token
         fs.writeFileSync(__dirname + '/config.json', JSON.stringify(this.properties),{encoding: "utf8"})
     }
 
