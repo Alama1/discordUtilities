@@ -7,7 +7,9 @@ class setBotAvatarCommand {
 
     async onCommand(interaction) {
 
-        if (interaction.user.id !== 434784069180588032) {
+
+        console.log(interaction.user.id)
+        if (interaction.user.id !== '434784069180588032') {
             const returnEmbed = new EmbedBuilder()
             returnEmbed
                 .setTitle('No.')
