@@ -3,18 +3,25 @@ require('dotenv').config()
 
 class Config {
     properties = {
-        discord: {
-            token: process.env.DISCORD_TOKEN,
-            chatID: "398082454532915201",
-            guildID: "234041538617933824"
-        },
-        avatarWatchList: {
-
-        }
+        discord: {},
+        avatarWatchList: {},
+        emojisToUse: []
     }
 
     constructor() {
+        this.properties = require('./config.json')
         this.properties.avatarWatchList = require('./avatarWatchList.json')
+        const emojis = require('./messageReactEmojiShop.json')
+        this.properties.emojisToUse = emojis.emojisToUse
+        this.properties.discord.token = process.env.DISCORD_TOKEN
+    }
+
+    saveEmojisToConfig() {
+        fs.writeFileSync(__dirname + '/messageReactEmojiShop.json', JSON.stringify(this.properties.emojisToUse),{encoding: "utf8"})
+    }
+
+    saveWholeConfig() {
+        fs.writeFileSync(__dirname + '/config.json', JSON.stringify(this.properties),{encoding: "utf8"})
     }
 
     saveAvatarsToConfig() {

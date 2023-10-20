@@ -5,13 +5,13 @@ class MessageHandler {
     }
 
     async onMessage(message) {
-        if (Math.random() > 0.995) {
+        if (Math.random() > this.discord.app.config.properties.discord.reactionChance) {
             this.reactToMessage(message)
         }
     }
 
     reactToMessage(message) {
-        const emojisnop = [":tulpa:1113099152390377523", ":ok:1113101186824933457", "<:rofl:1130622489098207413>"];
+        const emojisnop = this.discord.app.config.properties.emojisToUse;
         let emojirandom
         if (message) {
             emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
