@@ -12,6 +12,7 @@ class Config {
         this.properties = require('./config.json')
         this.properties.avatarWatchList = require('./avatarWatchList.json')
         this.properties.emojisToUse = require('./messageReactEmojiShop.json')
+        this.properties.avatarsEmojisToUse = require('./avatarReactEmojiShop.json')
         this.properties.discord.token = process.env.DISCORD_TOKEN
     }
 

@@ -64,6 +64,12 @@ class DiscordManager {
                 .setImage(newAVURL)
                 .setColor(await this.getAvatarColors(newAVURL));
             channel.send({ embeds: [avatarEmbed]})
+            .then((message) => {
+                const emojisnop = this.app.config.properties.avatarsEmojisToUse
+                emojisnop.forEach(element => {
+                    message.react(element)
+                });
+            })
 
         }
     }
