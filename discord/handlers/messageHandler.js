@@ -21,16 +21,24 @@ class MessageHandler {
             }
         }
 
-        if (Math.random() > 0.60) {
+        //Random message gif react
+        if (Math.random() > 0.98) {
             const gifPool = ['https://tenor.com/view/black-swan-hsr-black-swan-hsr-gif-10974457427521101289', 'https://media.discordapp.net/attachments/398082454532915201/1223264248122310757/Clipchamp.gif?ex=662cff1b&is=662bad9b&hm=9c39258cafa537f44ec5685ffce59290c51597e86578ef7ba825ecf77beb1eed&'
-                ,'https://tenor.com/view/in-his-words-have-letters-gif-25647210','https://tenor.com/view/nerd-cube-nerdcube-gif-25277654','https://tenor.com/view/monke-gif-25022758',
+                ,'https://tenor.com/view/in-his-words-have-letters-gif-25647210','https://tenor.com/view/monke-gif-25022758',
                 'https://tenor.com/view/poh-gif-12986555242870216710']
 
             const item = gifPool[Math.floor(Math.random()*gifPool.length)];
 
             message.reply(item)
         }
-    
+        
+        if (message.author.id === '434784069180588032') {
+            if (Math.random() > 0.60) {
+
+                message.reply('https://tenor.com/view/nerd-cube-nerdcube-gif-25277654')
+            }
+        }
+
     }
 
     reactToMessage(message) {
