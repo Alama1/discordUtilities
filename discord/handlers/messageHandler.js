@@ -32,9 +32,9 @@ class MessageHandler {
             message.reply(item)
         }
         
-        if (message.author.id === '434784069180588032') {
-            if (Math.random() > 0.60) {
-
+        //Nik response
+        if (message.author.id === '227507795472154624') {
+            if (Math.random() > 0.93) {
                 message.reply('https://tenor.com/view/nerd-cube-nerdcube-gif-25277654')
             }
         }
