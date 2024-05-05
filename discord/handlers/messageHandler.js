@@ -40,7 +40,7 @@ class MessageHandler {
         
         //Nik response
         if (message.author.id === '227507795472154624') {
-            if (this.random(7)) {
+            if (this.random(3)) {
                 message.reply('https://tenor.com/view/nerd-cube-nerdcube-gif-25277654')
             }
         }
