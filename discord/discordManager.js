@@ -22,9 +22,9 @@ class DiscordManager {
             this.interactionHandler = new InteractionHandler(this)
             this.messageHandler = new MessageHandler(this)
 
-            this.watchAvatars()
+            this.checkAvatars()
             setInterval(async () => {
-                await this.watchAvatars()
+                await this.checkAvatars()
             }, 60000)
         })
 
@@ -46,7 +46,8 @@ class DiscordManager {
             })
 
     }
-    async watchAvatars() {
+    
+    async checkAvatars() {
         const usersToCheck = this.app.config.properties.avatarWatchList
         const userIDs = Object.keys(usersToCheck)
         console.log(`Checking avatars ${Date.now().toString()} for users: ${userIDs.join(' ')}`)
