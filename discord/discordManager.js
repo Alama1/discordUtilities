@@ -1,4 +1,4 @@
-const {GatewayIntentBits, Client, EmbedBuilder} = require('discord.js')
+const {GatewayIntentBits, Client, EmbedBuilder, ActivityType} = require('discord.js')
 const InteractionHandler = require('./handlers/interactionHandler')
 const MessageHandler = require('./handlers/messageHandler')
 const getColors = require('get-image-colors')
@@ -42,7 +42,7 @@ class DiscordManager {
 
                 process.exit(1)
             }).then((res) => {
-                this.client.user.setActivity('на маму Димы', { type: 'WATCHING' })
+                this.client.user.setActivity('на маму Димы', { type: ActivityType.Watching })
             })
 
     }
