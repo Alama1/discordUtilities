@@ -41,6 +41,8 @@ class DiscordManager {
                 console.error(error)
 
                 process.exit(1)
+            }).then((res) => {
+                this.client.user.setActivity('на маму Димы', { type: 'WATCHING' })
             })
 
     }

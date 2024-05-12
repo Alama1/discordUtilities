@@ -8,6 +8,23 @@ class MessageHandler {
         if (Math.random() > this.discord.app.config.properties.discord.reactionChance) {
             this.reactToMessage(message)
         }
+        
+
+        this.respondToMassage(message)
+    }
+
+    reactToMessage(message) {
+        const emojisnop = this.discord.app.config.properties.emojisToUse;
+        let emojirandom
+        if (message) {
+            emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
+            console.log(emojirandom)
+            message.react(emojirandom)
+        }
+    }
+
+    respondToMassage(message) {
+
         //Sonic response
         if (message.content.toLowerCase().trim() == 'да') {
             if (Math.random() > 0.7) {
@@ -37,17 +54,6 @@ class MessageHandler {
             if (Math.random() > 0.93) {
                 message.reply('https://tenor.com/view/nerd-cube-nerdcube-gif-25277654')
             }
-        }
-
-    }
-
-    reactToMessage(message) {
-        const emojisnop = this.discord.app.config.properties.emojisToUse;
-        let emojirandom
-        if (message) {
-            emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
-            console.log(emojirandom)
-            message.react(emojirandom)
         }
     }
 }
