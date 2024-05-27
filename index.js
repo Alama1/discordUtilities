@@ -1,6 +1,6 @@
 'use strict'
 
-const app = require('./Application')
+const app = require('./src/Application')
 
 app
     .register()
