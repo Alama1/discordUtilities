@@ -10,6 +10,7 @@ class expressRouter {
 
         //get
         routes.get('/helloworld', this.helloWorld.bind(this))
+        routes.get('/')
         //post
 
         //put

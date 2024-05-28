@@ -1,4 +1,4 @@
-const Configuration = require('./config')
+const Configuration = require('./config/config')
 const Discord = require('./discord/discordManager')
 const Express = require('./express/expressManager')
 

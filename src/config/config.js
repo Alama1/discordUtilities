@@ -13,10 +13,10 @@ class Config {
     }
 
     constructor() {
-        this.properties = require('../config.json')
-        this.properties.avatarWatchList = require('./avatarWatchList.json')
-        this.properties.emojisToUse = require('../messageReactEmojiShop.json')
-        this.properties.avatarsEmojisToUse = require('../avatarReactEmojiShop.json')
+        this.properties = require('/config.json')
+        console.log(this.properties)
+        this.properties.emojisToUse = require('../../messageReactEmojiShop.json')
+        this.properties.avatarsEmojisToUse = require('../../avatarReactEmojiShop.json')
         this.properties.discord.token = process.env.DISCORD_TOKEN
         this.properties.express.secret = process.env.EXPRESS_SECRET
     }
