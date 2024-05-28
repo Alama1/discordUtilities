@@ -58,7 +58,7 @@ class DiscordManager {
             if (currentUser.avatar === oldAV) continue
 
             this.app.config.properties.avatarWatchList[userID] = { avatar: currentUser.avatar }
-            this.app.config.saveAvatarsToConfig()
+            this.app.config.saveConfig()
             const newAVURL = `https://cdn.discordapp.com/avatars/${userID}/${currentUser.avatar}?size=4096`
             const channel = await this.client.channels.fetch(this.app.config.properties.discord.chatID)
             const avatarEmbed = new EmbedBuilder()

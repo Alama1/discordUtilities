@@ -13,25 +13,14 @@ class Config {
     }
 
     constructor() {
-        this.properties = require('/config.json')
-        console.log(this.properties)
-        this.properties.emojisToUse = require('../../messageReactEmojiShop.json')
-        this.properties.avatarsEmojisToUse = require('../../avatarReactEmojiShop.json')
+        this.properties = require(`${__base}config.json`)
         this.properties.discord.token = process.env.DISCORD_TOKEN
         this.properties.express.secret = process.env.EXPRESS_SECRET
     }
 
-    saveEmojisToConfig() {
-        fs.writeFileSync(__dirname + '/messageReactEmojiShop.json', JSON.stringify(this.properties.emojisToUse),{encoding: "utf8"})
-    }
-
-    saveWholeConfig() {
+    saveConfig() {
         delete this.properties.discord.token
-        fs.writeFileSync(__dirname + '/config.json', JSON.stringify(this.properties),{encoding: "utf8"})
-    }
-
-    saveAvatarsToConfig() {
-        fs.writeFileSync(__dirname + '/avatarWatchList.json', JSON.stringify(this.properties.avatarWatchList),{encoding: "utf8"})
+        fs.writeFileSync(`${__base}config.json`, JSON.stringify(this.properties),{encoding: "utf8"})
     }
 }
 

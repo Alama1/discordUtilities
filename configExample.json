@@ -1,0 +1,14 @@
+{
+    "express": {
+      "port": "",
+      "secret": ""
+    },
+    "discord": {
+      "chatID": "",
+      "guildID": "",
+      "reactionChance": 0
+    },
+    "avatarWatchList": {},
+    "emojisToUse": [],
+    "avatarsEmojisToUse": []
+  }

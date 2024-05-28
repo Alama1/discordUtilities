@@ -28,7 +28,7 @@ class addEmojiToReactionShopCommand {
         }
 
         this.discord.app.config.properties.emojisToUse.push(passedEmojis[0])
-        this.discord.app.config.saveEmojisToConfig()
+        this.discord.app.config.saveConfig()
 
         const returnEmbed = new EmbedBuilder()
         returnEmbed

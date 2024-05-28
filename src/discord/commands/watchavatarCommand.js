@@ -14,7 +14,7 @@ class watchAvatarCommand {
         if (this.isAlreadyWatched(userID, interaction)) return
 
         this.discord.app.config.properties.avatarWatchList[userID] = { avatar: userAV }
-        this.discord.app.config.saveAvatarsToConfig()
+        this.discord.app.config.saveConfig()
 
 
         const returnEmbed = new EmbedBuilder()

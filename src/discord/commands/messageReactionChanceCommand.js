@@ -11,7 +11,7 @@ class messageReactionChanceCommand {
         const convertedChance = (100 - newReactionChanceInPercents) / 100
 
         this.discord.app.config.properties.discord.reactionChance = convertedChance
-        this.discord.app.config.saveWholeConfig()
+        this.discord.app.config.saveConfig()
 
 
         const returnEmbed = new EmbedBuilder()

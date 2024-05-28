@@ -8,7 +8,7 @@ class unwatchAvatarCommand {
 
     async onCommand(interaction) {
         const userID = this.getDataFromInteraction(interaction)
-        console.log(userID)
+
         if (!this.discord.app.config.properties.avatarWatchList.hasOwnProperty(userID)) {
             const returnEmbed = new EmbedBuilder()
                 .setTitle('Error!')
@@ -22,6 +22,7 @@ class unwatchAvatarCommand {
         }
 
         delete this.discord.app.config.properties.avatarWatchList[userID]
+        this.discord.app.config.saveConfig()
         const returnEmbed = new EmbedBuilder()
         returnEmbed
             .setTitle('Done!')
