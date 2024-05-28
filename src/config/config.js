@@ -9,7 +9,9 @@ class Config {
          },
         discord: {},
         avatarWatchList: {},
-        emojisToUse: []
+        emojisToUse: [],
+        gifReactions: [],
+        personalReactions: {}
     }
 
     constructor() {
