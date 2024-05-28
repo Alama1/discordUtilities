@@ -22,7 +22,7 @@ class expressManager {
 
     start() {
         this.server.listen(this.app.config.properties.express.port, () => {
-            console.log('[express]: Server started!')
+            console.log(`[express]: Server started on port: ${this.app.config.properties.express.port}!`)
         })
     }
 
