@@ -3,6 +3,10 @@ require('dotenv').config()
 
 class Config {
     properties = {
+        express: { 
+            port: 3003,
+            secret: ''
+         },
         discord: {},
         avatarWatchList: {},
         emojisToUse: []
@@ -14,6 +18,7 @@ class Config {
         this.properties.emojisToUse = require('../messageReactEmojiShop.json')
         this.properties.avatarsEmojisToUse = require('../avatarReactEmojiShop.json')
         this.properties.discord.token = process.env.DISCORD_TOKEN
+        this.properties.express.secret = process.env.EXPRESS_SECRET
     }
 
     saveEmojisToConfig() {
