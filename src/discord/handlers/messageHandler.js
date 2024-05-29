@@ -6,11 +6,15 @@ class MessageHandler {
 
     async onMessage(message) {
         if (message.author.bot) return
-        if (Math.random() > this.discord.app.config.properties.discord.reactionChance) {
+        
+        this.emojiResponse(message)
+        this.memeResponse(message)
+    }
+
+    emojiResponse(message) {
+        if (this.random(this.discord.app.config.properties.discord.reactionChance)) {
             this.reactToMessage(message)
         }
-
-        this.memeResponse(message)
     }
 
     memeResponse(message) {
@@ -28,7 +32,7 @@ class MessageHandler {
         }
 
         //Random message gif react
-        if (this.random(2)) {
+        if (this.random(this.discord.app.config.properties.discord.gifReactionChance)) {
             const gifPool = this.discord.app.config.properties.gifReactions
 
             const gif = gifPool[Math.floor(Math.random()*gifPool.length)];
@@ -39,8 +43,9 @@ class MessageHandler {
         //Personal responses
         for (const [key, value] of Object.entries(this.discord.app.config.properties.personalReactions)) {
             if (message.author.id === key) {
-                if (this.random(3)) {
-                    message.reply(value)
+                if (this.random(this.discord.app.config.properties.discord.gifReactionChance)) {
+                    const gif = value[Math.floor(Math.random()*value.length)];
+                    message.reply(gif)
                 }
             }
         }

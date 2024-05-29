@@ -15,7 +15,6 @@ class expressRouter {
         //TODO reaction emojis
         
         //post
-        //TODO personal responses
         //TODO gif reactions
         //TODO change bot avatar
 
@@ -34,6 +33,23 @@ class expressRouter {
 
     getGifReactions() {
 
+    }
+
+    addGifReaction(req, res) {
+        const { url, user } = req.body
+        if (!url || !user) {
+            res.status(400)
+            res.send({ success: false, message: 'Url or user is not specified.' })
+        }
+        if (user === 'everyone') {
+            this.server.app.config.properties.gifReactions.push(url)
+            this.server.app.config.properties.saveConfig()
+            res.status(201)
+            res.send({ success: true, message: 'Reaction added successfully!' })
+            return
+        }
+        this.server.app.config.properties.personalReactions[user].push(url)
+        this.server.app.config.properties.saveConfig()
     }
 }
 

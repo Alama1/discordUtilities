@@ -6,7 +6,8 @@
     "discord": {
       "chatID": "",
       "guildID": "",
-      "reactionChance": 0
+      "reactionChance": 0,
+      "gifReactionChance": 0
     },
     "avatarWatchList": {},
     "emojisToUse": [],
