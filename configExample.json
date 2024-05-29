@@ -7,7 +7,8 @@
       "chatID": "",
       "guildID": "",
       "reactionChance": 0,
-      "gifReactionChance": 0
+      "gifReactionChance": 0,
+      "personalGifReactionChance": 0
     },
     "avatarWatchList": {},
     "emojisToUse": [],

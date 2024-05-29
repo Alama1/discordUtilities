@@ -43,7 +43,7 @@ class MessageHandler {
         //Personal responses
         for (const [key, value] of Object.entries(this.discord.app.config.properties.personalReactions)) {
             if (message.author.id === key) {
-                if (this.random(this.discord.app.config.properties.discord.gifReactionChance)) {
+                if (this.random(this.discord.app.config.properties.discord.personalGifReactionChance)) {
                     const gif = value[Math.floor(Math.random()*value.length)];
                     message.reply(gif)
                 }
@@ -56,7 +56,6 @@ class MessageHandler {
         let emojirandom
         if (message) {
             emojirandom = emojisnop[Math.floor(Math.random() * emojisnop.length)]
-            console.log(emojirandom)
             message.react(emojirandom)
         }
     }

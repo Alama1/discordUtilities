@@ -36,11 +36,11 @@ class expressManager {
 
         if (!authToken) {
             res.status(401)
-            res.send({ success: false, message: 'Authorization failed.' })
+            res.send({ success: false, message: 'No auth token provided.' })
             return
         }
         const token = authToken.split(' ')[1]
-
+        
         if (token !== this.app.config.properties.express.secret) {
             res.status(403)
             res.send({ success: false, message: 'Auth failed.' })
