@@ -13,6 +13,7 @@ class expressRouter {
         routes.get('/gifReaction', this.getGifReactions.bind(this))
         routes.get('/avatarWatchList', this.getWatchedAvatars.bind(this))
         routes.get('/reactionChance', this.getReactionChance.bind(this))
+        routes.get('/users', this.getUsers.bind(this))
         
         //post
         routes.post('/gifReaction', this.addGifReaction.bind(this))
@@ -30,6 +31,16 @@ class expressRouter {
     helloWorld(req, res) {
         res.status(200)
         res.send({ success: true, message: 'Hello!' })
+    }
+
+    getUsers(req, res) {
+        try {
+            res.status(200)
+            res.send({ success: true, message: this.server.app.discord.users })
+        } catch(e) {
+            res.status(500)
+            res.send({ success: false, message: 'Something welt wrong...' })
+        }
     }
 
     getReactionChance(req, res) {
@@ -123,7 +134,6 @@ class expressRouter {
             res.status(201)
             res.send({ success: true, message: 'Reaction added successfully!' })
         } catch(e) {
-            console.log(e)
             res.status(500)
             res.send({ success: false, message: 'Something welt wrong...' })
         }

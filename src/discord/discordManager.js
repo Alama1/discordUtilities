@@ -6,6 +6,7 @@ const getColors = require('get-image-colors')
 class DiscordManager {
     constructor(app) {
         this.app = app
+        this.users = []
     }
 
     async connect() {
@@ -14,6 +15,7 @@ class DiscordManager {
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
+                GatewayIntentBits.GuildMembers
             ]
         })
 
@@ -26,6 +28,11 @@ class DiscordManager {
             setInterval(async () => {
                 await this.checkAvatars()
             }, 60000)
+            
+            this.updateUserList()
+            setInterval(() => {
+                this.updateUserList()
+            }, 24 * 60 * 60 * 100) //Once a day
         })
 
         this.client.on('interactionCreate', interaction => {
@@ -45,6 +52,16 @@ class DiscordManager {
                 this.client.user.setActivity('на маму Димы', { type: ActivityType.Watching })
             })
 
+    }
+
+    async updateUserList() {
+        const guild = await this.client.guilds.fetch(this.app.config.properties.discord.guildID)
+        const members = await guild.members.fetch()
+        console.log('Fetching users..')
+        this.users = members.map((element) => {
+            const username = element.nickname ? element.nickname : element.user.username
+            return { [username]: element.id }
+        })
     }
     
     async checkAvatars() {
