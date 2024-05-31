@@ -98,11 +98,20 @@ class expressRouter {
 
     getGifReactions(req, res) {
         try {
+            const users = this.server.app.discord.users
             const gif = this.server.app.config.properties.gifReactions
             const personalGif = this.server.app.config.properties.personalReactions
+
+            let restructuredPersonalGifs = {}
+            for (const [key, value] of Object.entries(personalGif)) {
+                const username = users[key.toString()]
+                restructuredPersonalGifs[`${username}<>${key}`] = value
+            }
+
             res.status(200)
-            res.send({ success: true, message: { global: gif, personal: personalGif } })
+            res.send({ success: true, message: { global: gif, personal: restructuredPersonalGifs } })
         } catch(e) {
+            console.log(e)
             res.status(500)
             res.send({ success: false, message: 'Internal server error.' })
         }

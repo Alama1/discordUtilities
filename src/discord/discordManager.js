@@ -6,7 +6,7 @@ const getColors = require('get-image-colors')
 class DiscordManager {
     constructor(app) {
         this.app = app
-        this.users = []
+        this.users = {}
     }
 
     async connect() {
@@ -58,9 +58,10 @@ class DiscordManager {
         const guild = await this.client.guilds.fetch(this.app.config.properties.discord.guildID)
         const members = await guild.members.fetch()
         console.log('Fetching users..')
-        this.users = members.map((element) => {
+
+        members.forEach((element) => {
             const username = element.nickname ? element.nickname : element.user.username
-            return { [username]: element.id }
+            this.users[element.id] = username.trim()
         })
     }
     
