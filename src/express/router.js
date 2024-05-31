@@ -10,14 +10,14 @@ class expressRouter {
 
         //get
         routes.get('/helloworld', this.helloWorld.bind(this))
-        routes.get('/gifReaction', this.getGifReactions.bind(this))
-        routes.get('/avatarWatchList', this.getWatchedAvatars.bind(this))
-        routes.get('/reactionChance', this.getReactionChance.bind(this))
+        routes.get('/gif-reaction', this.getGifReactions.bind(this))
+        routes.get('/avatar-watch-list', this.getWatchedAvatars.bind(this))
+        routes.get('/reaction-chance', this.getReactionChance.bind(this))
         routes.get('/users', this.getUsers.bind(this))
         
         //post
-        routes.post('/gifReaction', this.addGifReaction.bind(this))
-        routes.post('/reactionChance', this.setReactionChance.bind(this))
+        routes.post('/gif-reaction', this.addGifReaction.bind(this))
+        routes.post('/reaction-chance', this.setReactionChance.bind(this))
         //TODO change bot avatar
 
         //put
@@ -146,7 +146,6 @@ class expressRouter {
             res.status(500)
             res.send({ success: false, message: 'Something welt wrong...' })
         }
-        
     }
 }
 
