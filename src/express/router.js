@@ -57,19 +57,17 @@ class expressRouter {
 
     setReactionChance(req, res) {
         try {
-            const { gifChance, personalGifChance } = req.body
-            if (!gifChance && !personalGifChance) {
+            const { gifChance, type } = req.body
+            if (!gifChance && !type) {
                 res.status(400)
                 res.send({ success: false, message: 'Personal or global gif chance is not specified!' })
                 return
             }
 
-            if (gifChance) {
+            if (type === 'global') {
                 this.server.app.config.properties.discord.gifReactionChance = gifChance
-            }
-
-            if (personalGifChance) {
-                this.server.app.config.properties.discord.personalGifReactionChance = personalGifChance
+            } else {
+                this.server.app.config.properties.discord.personalGifReactionChance = gifChance
             }
 
             res.status(201)
