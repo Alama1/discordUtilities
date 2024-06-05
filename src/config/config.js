@@ -18,6 +18,7 @@ class Config {
         this.properties = require(`${__base}config.json`)
         this.properties.discord.token = process.env.DISCORD_TOKEN
         this.properties.express.secret = process.env.EXPRESS_SECRET
+        this.properties.express.port = process.env.PORT
     }
 
     saveConfig() {
