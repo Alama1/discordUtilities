@@ -23,7 +23,7 @@ class expressRouter {
         //put
 
         //delete
-        routes.delete('/gif-reaction', this.deleteGif.bind(this))
+        routes.patch('/gif-reaction', this.deleteGif.bind(this))
         return routes
     }
 
@@ -34,7 +34,7 @@ class expressRouter {
 
     deleteGif(req, res) {
         const { gifToDelete, user } = req.body
-        
+
         try {
             if (user === 'everyone') {
                 const index = this.server.app.config.properties.gifReactions.indexOf(gifToDelete)
@@ -53,7 +53,7 @@ class expressRouter {
             res.status(200)
             res.send({success: true, message: 'Gif was deleted!'})
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(400)
             res.send({ success: false, message: 'Something went wrong :(' })
         }
@@ -64,7 +64,7 @@ class expressRouter {
             res.status(200)
             res.send({ success: true, message: this.server.app.discord.users })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Something welt wrong...' })
         }
@@ -77,7 +77,7 @@ class expressRouter {
             res.status(200)
             res.send({ success: true, message: { gifChance, personalGifChance } })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Internal server error.' })
         }
@@ -101,7 +101,7 @@ class expressRouter {
             res.status(201)
             res.send({ success: true, message: 'Chance updated!' })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Internal server error.' })
         }
@@ -118,7 +118,7 @@ class expressRouter {
             res.status(200)
             res.send({ success: true, message: refactoredAvatars })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Internal server error.' })
         }
@@ -139,7 +139,7 @@ class expressRouter {
             res.status(200)
             res.send({ success: true, message: { global: gif, personal: restructuredPersonalGifs } })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Internal server error.' })
         }
@@ -171,7 +171,7 @@ class expressRouter {
             res.status(201)
             res.send({ success: true, message: 'Reaction added successfully!' })
         } catch(e) {
-            console.log(e.message)
+            console.error(e.message)
             res.status(500)
             res.send({ success: false, message: 'Something welt wrong...' })
         }
