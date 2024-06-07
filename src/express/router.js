@@ -23,14 +23,39 @@ class expressRouter {
         //put
 
         //delete
-        //TODO personal responses
-        //TODO gif reactions
+        routes.delete('/gif-reaction', this.deleteGif.bind(this))
         return routes
     }
 
     helloWorld(req, res) {
         res.status(200)
         res.send({ success: true, message: 'Hello!' })
+    }
+
+    deleteGif(req, res) {
+        const { gifToDelete, user } = req.body
+        
+        try {
+            if (user === 'everyone') {
+                const index = this.server.app.config.properties.gifReactions.indexOf(gifToDelete)
+                if (index > -1) {
+                    this.server.app.config.properties.gifReactions.splice(index, 1)
+                    this.server.app.config.saveConfig()
+                }
+            } else {
+                const index = this.server.app.config.properties.personalReactions[user].indexOf(gifToDelete)
+                if (index > -1) {
+                    this.server.app.config.properties.personalReactions[user].splice(index, 1)
+                    this.server.app.config.saveConfig()
+                }
+            }
+
+            res.status(200)
+            res.send({success: true, message: 'Gif was deleted!'})
+        } catch(e) {
+            res.status(400)
+            res.send({ success: false, message: 'Something went wrong :(' })
+        }
     }
 
     getUsers(req, res) {
