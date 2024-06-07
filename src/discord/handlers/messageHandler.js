@@ -37,6 +37,7 @@ class MessageHandler {
 
             const gif = gifPool[Math.floor(Math.random()*gifPool.length)];
 
+            if (!gif) return
             message.reply(gif)
         }
         
@@ -45,6 +46,7 @@ class MessageHandler {
             if (message.author.id === key) {
                 if (this.random(this.discord.app.config.properties.discord.personalGifReactionChance)) {
                     const gif = value[Math.floor(Math.random()*value.length)];
+                    if (!gif) return
                     message.reply(gif)
                 }
             }
