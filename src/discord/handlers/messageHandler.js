@@ -1,7 +1,16 @@
+const CharacterAI = require('node_characterai')
+
 class MessageHandler {
 
     constructor(discord) {
         this.discord = discord
+        this.initCharacterAI()
+    }
+
+    async initCharacterAI () {
+        const characterAI = new CharacterAI()
+        await characterAI.authenticateWithToken(this.discord.app.config.properties.characterAi.token)
+        this.chat = await characterAI.createOrContinueChat(this.discord.app.config.properties.characterAi.character_id)
     }
 
     async onMessage(message) {
@@ -9,11 +18,30 @@ class MessageHandler {
         
         this.emojiResponse(message)
         this.memeResponse(message)
+        this.aiResponse(message)
     }
 
     emojiResponse(message) {
         if (this.random(this.discord.app.config.properties.discord.reactionChance)) {
             this.reactToMessage(message)
+        }
+    }
+
+    async aiResponse(message) {
+        if (message.content.includes(this.discord.client.user.id)) {
+            const messageContent = message.content.replace(`<@${this.discord.client.user.id}>`, '').trim()
+            const aiReply = await this.chat.sendAndAwaitResponse(messageContent, true)
+            message.reply(aiReply.text || 'Aga da')
+        }
+
+        if (message.mentions.repliedUser.id === this.discord.client.user.id) {
+            const aiReply = await this.chat.sendAndAwaitResponse(message.content, true)
+            message.reply(aiReply.text || 'Aga da')
+        }
+
+        if (this.chance(this.discord.app.config.properties.discord.aiResponseChance)) {
+            const aiReply = await this.chat.sendAndAwaitResponse(message.content, true)
+            message.reply(aiReply.text || 'Aga da')
         }
     }
 

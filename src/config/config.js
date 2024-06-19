@@ -11,7 +11,8 @@ class Config {
         avatarWatchList: {},
         emojisToUse: [],
         gifReactions: [],
-        personalReactions: {}
+        personalReactions: {},
+        characterAi: {}
     }
 
     constructor() {
