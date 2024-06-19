@@ -4,7 +4,7 @@ class MessageHandler {
 
     constructor(discord) {
         this.discord = discord
-        this.initCharacterAI()
+        //this.initCharacterAI()
     }
 
     async initCharacterAI () {
@@ -18,7 +18,7 @@ class MessageHandler {
         
         this.emojiResponse(message)
         this.memeResponse(message)
-        this.aiResponse(message)
+        //this.aiResponse(message)
     }
 
     emojiResponse(message) {
