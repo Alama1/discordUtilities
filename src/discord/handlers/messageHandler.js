@@ -1,16 +1,14 @@
-const CharacterAI = require('node_characterai')
+const Groq = require('groq-sdk')
 
 class MessageHandler {
 
     constructor(discord) {
         this.discord = discord
-        //this.initCharacterAI()
+        this.initAI()
     }
 
-    async initCharacterAI () {
-        const characterAI = new CharacterAI()
-        await characterAI.authenticateWithToken(this.discord.app.config.properties.characterAi.token)
-        this.chat = await characterAI.createOrContinueChat(this.discord.app.config.properties.characterAi.character_id)
+    async initAI () {
+        this.groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
     }
 
     async onMessage(message) {
@@ -18,7 +16,7 @@ class MessageHandler {
         
         this.emojiResponse(message)
         this.memeResponse(message)
-        //this.aiResponse(message)
+        this.aiResponse(message)
     }
 
     emojiResponse(message) {
@@ -30,19 +28,38 @@ class MessageHandler {
     async aiResponse(message) {
         if (message.content.includes(this.discord.client.user.id)) {
             const messageContent = message.content.replace(`<@${this.discord.client.user.id}>`, '').trim()
-            const aiReply = await this.chat.sendAndAwaitResponse(messageContent, true)
-            message.reply(aiReply.text || 'Aga da')
+            const aiResp = await this.getAIMessage(messageContent)
+            message.reply(aiResp || 'Aga da')
         }
 
-        if (message.mentions.repliedUser.id === this.discord.client.user.id) {
-            const aiReply = await this.chat.sendAndAwaitResponse(message.content, true)
-            message.reply(aiReply.text || 'Aga da')
+        if (message.mentions.repliedUser) {
+            if (message.mentions.repliedUser.id === this.discord.client.user.id) {
+                const aiReply = await this.getAIMessage(message.content)
+                message.reply(aiReply || 'Aga da')
+            }
         }
+        
+        if (this.random(this.discord.app.config.properties.discord.aiResponseChance)) {
+            const aiReply = await this.getAIMessage(message.content)
+            message.reply(aiReply || 'Aga da')
+        }
+    }
 
-        if (this.chance(this.discord.app.config.properties.discord.aiResponseChance)) {
-            const aiReply = await this.chat.sendAndAwaitResponse(message.content, true)
-            message.reply(aiReply.text || 'Aga da')
-        }
+    async getAIMessage(message) {
+        const resp = await this.groq.chat.completions.create({
+            messages: [
+                        {
+                            role: "system",
+                            content: this.discord.app.config.properties.ai.character
+                        },
+                        {
+                            role: "user",
+                            content: message,
+                        },
+                    ],
+            model: "llama3-8b-8192",
+          });
+        return resp.choices[0].message.content
     }
 
     memeResponse(message) {

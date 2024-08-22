@@ -12,7 +12,7 @@ class Config {
         emojisToUse: [],
         gifReactions: [],
         personalReactions: {},
-        characterAi: {}
+        ai: {}
     }
 
     constructor() {
