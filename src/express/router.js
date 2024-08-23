@@ -14,10 +14,12 @@ class expressRouter {
         routes.get('/avatar-watch-list', this.getWatchedAvatars.bind(this))
         routes.get('/reaction-chance', this.getReactionChance.bind(this))
         routes.get('/users', this.getUsers.bind(this))
+        routes.get('/persona', this.getAIPersona.bind(this))
         
         //post
         routes.post('/gif-reaction', this.addGifReaction.bind(this))
         routes.post('/reaction-chance', this.setReactionChance.bind(this))
+        routes.post('/persona', this.setAIPersona.bind(this))
         //TODO change bot avatar
 
         //put
@@ -100,6 +102,40 @@ class expressRouter {
 
             res.status(201)
             res.send({ success: true, message: 'Chance updated!' })
+        } catch(e) {
+            console.error(e.message)
+            res.status(500)
+            res.send({ success: false, message: 'Internal server error.' })
+        }
+    }
+
+    setAIPersona(req, res) {
+        try {
+            const { persona } = req.body
+            if (!persona) {
+                res.status(400)
+                res.send({ success: false, message: 'No ai persona was provided!' })
+                return
+            }
+
+            this.server.app.config.properties.ai.character = persona;
+            this.server.app.config.saveConfig()
+
+            res.status(201)
+            res.send({ success: true, message: 'Updated!' })
+        } catch(e) {
+            console.error(e.message)
+            res.status(500)
+            res.send({ success: false, message: 'Internal server error.' })
+        }
+    }
+
+    getAIPersona(req, res) {
+        try {
+            const persona = this.server.app.config.properties.ai.character;
+
+            res.status(201)
+            res.send({ success: true, message: persona })
         } catch(e) {
             console.error(e.message)
             res.status(500)
