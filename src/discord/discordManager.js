@@ -83,7 +83,7 @@ class DiscordManager {
         }, { members: { size: 0 } });
     
         if (mostPopulatedChannel.members.size > 0) {
-            joinVoiceChannel({
+            const connection = joinVoiceChannel({
                 channelId: mostPopulatedChannel.id,
                 guildId: guild.id,
                 adapterCreator: guild.voiceAdapterCreator,
