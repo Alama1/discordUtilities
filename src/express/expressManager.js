@@ -16,7 +16,8 @@ class expressManager {
         this.server.use(cors())
         this.server.use(this.logger.bind(this))
         this.server.use(this.authCheck.bind(this))
-        this.server.use('/', router.createRoutes()) 
+        this.server.use('/', router.createRoutes())
+
         console.log('[express]: Routes configured!')
     }
 

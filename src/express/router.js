@@ -30,8 +30,7 @@ class expressRouter {
     }
 
     helloWorld(req, res) {
-        res.status(200)
-        res.send({ success: true, message: 'Hello!' })
+        
     }
 
     deleteGif(req, res) {

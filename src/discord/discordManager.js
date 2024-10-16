@@ -1,7 +1,11 @@
-const {GatewayIntentBits, Client, EmbedBuilder, ActivityType} = require('discord.js')
+const {GatewayIntentBits, Client, EmbedBuilder, ActivityType, ChannelType} = require('discord.js');
+const { joinVoiceChannel, createAudioResource, createAudioPlayer } = require('@discordjs/voice');
 const InteractionHandler = require('./handlers/interactionHandler')
 const MessageHandler = require('./handlers/messageHandler')
 const getColors = require('get-image-colors')
+const schedule = require('node-schedule');
+const { join } = require('path')
+
 
 class DiscordManager {
     constructor(app) {
@@ -15,7 +19,8 @@ class DiscordManager {
                 GatewayIntentBits.Guilds,
                 GatewayIntentBits.GuildMessages,
                 GatewayIntentBits.MessageContent,
-                GatewayIntentBits.GuildMembers
+                GatewayIntentBits.GuildMembers,
+                GatewayIntentBits.GuildVoiceStates,
             ]
         })
 
@@ -33,6 +38,9 @@ class DiscordManager {
             setInterval(() => {
                 this.updateUserList()
             }, 24 * 60 * 60 * 100) //Once a day
+
+            this.bigBen()
+            schedule.scheduleJob('0 * * * *', () => {this.bigBen()})
         })
 
         this.client.on('interactionCreate', interaction => {
@@ -63,6 +71,29 @@ class DiscordManager {
             const username = element.nickname ? element.nickname : element.user.username
             this.users[element.id] = username.trim()
         })
+    }
+
+    async bigBen() {
+        const guild = await this.client.guilds.fetch(this.app.config.properties.discord.guildID)
+        const channels = await guild.channels.fetch()
+        const voiceChannels = channels.filter(channel => channel.type === ChannelType.GuildVoice);
+        const activeVoiceChannels = voiceChannels.filter(channel => channel.members.size > 0)
+        const mostPopulatedChannel = activeVoiceChannels.reduce((prev, curr) => {
+            return (prev.members.size > curr.members.size) ? prev : curr;
+        }, { members: { size: 0 } });
+    
+        if (mostPopulatedChannel.members.size > 0) {
+            joinVoiceChannel({
+                channelId: mostPopulatedChannel.id,
+                guildId: guild.id,
+                adapterCreator: guild.voiceAdapterCreator,
+            });
+            const player = createAudioPlayer();
+            const resource = createAudioResource(join(__dirname, 'bigben.mp3'));
+
+            player.play(resource);
+            connection.subscribe(player);
+        }
     }
     
     async checkAvatars() {
