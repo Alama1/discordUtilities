@@ -38,9 +38,7 @@ class DiscordManager {
             setInterval(() => {
                 this.updateUserList()
             }, 24 * 60 * 60 * 100) //Once a day
-
-            this.bigBen()
-            schedule.scheduleJob('0 * * * *', () => {this.bigBen()})
+            schedule.scheduleJob('0 15 * * *', () => {this.bigBen()})
         })
 
         this.client.on('interactionCreate', interaction => {
