@@ -1,5 +1,5 @@
 const {GatewayIntentBits, Client, EmbedBuilder, ActivityType, ChannelType} = require('discord.js');
-const { joinVoiceChannel, createAudioResource, createAudioPlayer } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 const InteractionHandler = require('./handlers/interactionHandler')
 const MessageHandler = require('./handlers/messageHandler')
 const getColors = require('get-image-colors')
