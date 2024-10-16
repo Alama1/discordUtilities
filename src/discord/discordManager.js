@@ -93,6 +93,11 @@ class DiscordManager {
 
             player.play(resource);
             connection.subscribe(player);
+
+            player.on(AudioPlayerStatus.Idle, () => {
+                connection.destroy();
+                console.log('Left the voice channel.');
+            });
         }
     }
     
