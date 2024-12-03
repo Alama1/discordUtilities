@@ -51,46 +51,54 @@ class MessageHandler {
     }
 
     async getGoogleAIMessage(message) {
-        let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null
-
-        const messageContent = message.content
-        let parts = [
-            {
+        let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null;
+        const messageContent = message.content;
+    
+        let parts = [];
+    
+        // Add text part if there is content
+        if (messageContent) {
+            parts.push({
                 text: messageContent
-            }
-        ]
-
-        if (messageAttachment) {
-            parts[0].fileData = {
-                fileUrl: messageAttachment,
-                mimeType: 'image/jpg'
-            }
+            });
         }
-
-        console.log(parts)
-
+    
+        // Add file part if there is an attachment
+        if (messageAttachment) {
+            parts.push({
+                fileData: {
+                    fileUrl: messageAttachment,
+                    mimeType: 'image/jpg'
+                }
+            });
+        }
+    
+        console.log(parts);
+    
         const resp = await this.googleAIModel.generateContent({
             contents: [
-              {
-                role: 'user',
-                parts
-              }
+                {
+                    role: 'user',
+                    parts
+                }
             ],
             systemInstruction: {
                 "role": "system",
                 "parts": [
-                {
-                    "text": this.discord.app.config.properties.ai.character
-                }]
+                    {
+                        "text": this.discord.app.config.properties.ai.character
+                    }
+                ]
             },
-
             generationConfig: {
-              maxOutputTokens: 1000,
-              temperature: 0.1,
+                maxOutputTokens: 1000,
+                temperature: 0.1,
             },
-          });
-        return resp.response.text()
+        });
+    
+        return resp.response.text();
     }
+    
 
     async getAIMessage(message) {
         const resp = await this.groq.chat.completions.create({
