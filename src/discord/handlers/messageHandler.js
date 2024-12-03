@@ -51,6 +51,7 @@ class MessageHandler {
 
     async getGoogleAIMessage(message) {
         const messageContent = message.content
+        console.log(messageContent)
         const resp = await this.googleAIModel.generateContent({
             contents: [
               {
