@@ -53,7 +53,15 @@ class MessageHandler {
     async getGoogleAIMessage(message) {
         let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null;
         const messageContent = message.content;
-    
+        let imageResp = null;
+
+        if (messageAttachment) {
+            imageResp = await fetch(
+                messageAttachment
+            )
+                .then((response) => response.arrayBuffer());
+            
+        }
         let parts = [];
     
         // Add text part if there is content
@@ -62,16 +70,16 @@ class MessageHandler {
                 text: messageContent
             });
         }
-    
-        // Add file part if there is an attachment
-        if (messageAttachment) {
+
+        if  (messageAttachment) {
             parts.push({
                 fileData: {
-                    fileUri: messageAttachment,
+                    fileUri: imageResp,
                     mimeType: 'image/jpg'
                 }
             });
         }
+
     
         console.log(parts);
     
