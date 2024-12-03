@@ -73,8 +73,8 @@ class MessageHandler {
 
         if  (messageAttachment) {
             parts.push({
-                fileData: {
-                    fileUri: imageResp,
+                inlineData: {
+                    data: imageResp,
                     mimeType: 'image/jpg'
                 }
             });
