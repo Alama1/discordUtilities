@@ -60,12 +60,6 @@ class MessageHandler {
                   {
                     text: messageContent,
                   }
-                ],
-                role: 'system',
-                parts: [
-                  {
-                    text: this.discord.app.config.properties.ai.character,
-                  }
                 ]
               }
             ],
