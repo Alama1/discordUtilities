@@ -70,18 +70,6 @@ class MessageHandler {
                 text: messageContent
             });
         }
-
-        if  (messageAttachment) {
-            parts.push({
-                inlineData: {
-                    data: imageResp,
-                    mimeType: 'image/jpg'
-                }
-            });
-        }
-
-    
-        console.log(parts);
     
         const resp = await this.googleAIModel.generateContent({
             contents: [
