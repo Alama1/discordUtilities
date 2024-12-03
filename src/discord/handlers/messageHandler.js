@@ -51,7 +51,7 @@ class MessageHandler {
 
     async getGoogleAIMessage(message) {
         const messageContent = message.content
-        console.log(messageContent)
+        console.log(this.discord.app.config.properties.ai.character)
         const resp = await this.googleAIModel.generateContent({
             contents: [
               {
@@ -63,6 +63,14 @@ class MessageHandler {
                 ]
               }
             ],
+            systemInstruction: {
+                "role": "system",
+                "parts": [
+                {
+                    "text": this.discord.app.config.properties.ai.character
+                }]
+            },
+
             generationConfig: {
               maxOutputTokens: 1000,
               temperature: 0.1,
