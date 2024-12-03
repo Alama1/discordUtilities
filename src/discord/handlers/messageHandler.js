@@ -1,4 +1,5 @@
 const Groq = require('groq-sdk')
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 class MessageHandler {
 
@@ -9,6 +10,9 @@ class MessageHandler {
 
     async initAI () {
         this.groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+        this.googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY);
+        this.googleAIModel = this.googleAI.getGenerativeModel({model: 'gemini-1.5-flash'})
+        console.log(process.env.GOOGLE_AI_KEY)
     }
 
     async onMessage(message) {
@@ -28,21 +32,48 @@ class MessageHandler {
     async aiResponse(message) {
         if (message.content.includes(this.discord.client.user.id)) {
             const messageContent = message.content.replace(`<@${this.discord.client.user.id}>`, '').trim()
-            const aiResp = await this.getAIMessage(messageContent)
+            const aiResp = await this.getGoogleAIMessage(messageContent)
             message.reply(aiResp || 'Aga da')
         }
 
         if (message.mentions.repliedUser) {
             if (message.mentions.repliedUser.id === this.discord.client.user.id) {
-                const aiReply = await this.getAIMessage(message.content)
+                const aiReply = await this.getGoogleAIMessage(message)
                 message.reply(aiReply || 'Aga da')
             }
         }
         
         if (this.random(this.discord.app.config.properties.discord.aiResponseChance)) {
-            const aiReply = await this.getAIMessage(message.content)
+            const aiReply = await this.getGoogleAIMessage(message)
             message.reply(aiReply || 'Aga da')
         }
+    }
+
+    async getGoogleAIMessage(message) {
+        const messageContent = message.content
+        const resp = await this.googleAIModel.generateContent({
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text: messageContent,
+                  }
+                ],
+                role: 'system',
+                parts: [
+                  {
+                    text: this.discord.app.config.properties.ai.character,
+                  }
+                ]
+              }
+            ],
+            generationConfig: {
+              maxOutputTokens: 1000,
+              temperature: 0.1,
+            },
+          });
+        return resp.response.text()
     }
 
     async getAIMessage(message) {
