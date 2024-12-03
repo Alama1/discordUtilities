@@ -51,17 +51,16 @@ class MessageHandler {
     }
 
     async getGoogleAIMessage(message) {
-        let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null;
+        //let messageAttachment = message.attachments.size ? message.attachments.first().url : null;
         const messageContent = message.content || 'Вот тебе картинка';
-        let imageResp = null;
 
-        if (messageAttachment) {
-            imageResp = await fetch(
-                messageAttachment
-            )
-                .then((response) => response.arrayBuffer());
+        // if (messageAttachment) {
+        //     imageResp = await fetch(
+        //         messageAttachment
+        //     )
+        //         .then((response) => response.arrayBuffer());
             
-        }
+        // }
         let parts = [];
     
         // Add text part if there is content
