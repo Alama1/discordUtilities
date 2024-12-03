@@ -67,7 +67,7 @@ class MessageHandler {
         if (messageAttachment) {
             parts.push({
                 fileData: {
-                    fileUrl: messageAttachment,
+                    fileUri: messageAttachment,
                     mimeType: 'image/jpg'
                 }
             });
