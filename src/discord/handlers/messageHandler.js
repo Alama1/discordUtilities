@@ -17,7 +17,8 @@ class MessageHandler {
 
     async onMessage(message) {
         if (message.author.bot) return
-        
+        let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null
+        console.log(messageAttachment)
         this.emojiResponse(message)
         this.memeResponse(message)
         this.aiResponse(message)
@@ -50,17 +51,29 @@ class MessageHandler {
     }
 
     async getGoogleAIMessage(message) {
+        let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null
+
         const messageContent = message.content
-        console.log(this.discord.app.config.properties.ai.character)
+        let parts = [
+            {
+                text: messageContent
+            }
+        ]
+
+        if (messageAttachment) {
+            parts[0].fileData = {
+                fileUrl: messageAttachment,
+                mimeType: 'image/jpg'
+            }
+        }
+
+        console.log(parts)
+
         const resp = await this.googleAIModel.generateContent({
             contents: [
               {
                 role: 'user',
-                parts: [
-                  {
-                    text: messageContent,
-                  }
-                ]
+                parts
               }
             ],
             systemInstruction: {
