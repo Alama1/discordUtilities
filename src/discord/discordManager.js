@@ -2,6 +2,7 @@ const {GatewayIntentBits, Client, EmbedBuilder, ActivityType, ChannelType} = req
 const { joinVoiceChannel, createAudioResource, createAudioPlayer, AudioPlayerStatus } = require('@discordjs/voice');
 const InteractionHandler = require('./handlers/interactionHandler')
 const MessageHandler = require('./handlers/messageHandler')
+const VoiceHandler = require('./handlers/speechHandler')
 const getColors = require('get-image-colors')
 const schedule = require('node-schedule');
 const { join } = require('path')
@@ -28,6 +29,7 @@ class DiscordManager {
             console.log(`${this.client.user.tag} is ready!`)
             this.interactionHandler = new InteractionHandler(this)
             this.messageHandler = new MessageHandler(this)
+            this.voiceHandler = new VoiceHandler(this)
 
             this.checkAvatars()
             setInterval(async () => {

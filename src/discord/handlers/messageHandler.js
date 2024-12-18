@@ -12,13 +12,11 @@ class MessageHandler {
         this.groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
         this.googleAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY);
         this.googleAIModel = this.googleAI.getGenerativeModel({model: 'gemini-1.5-flash'})
-        console.log(process.env.GOOGLE_AI_KEY)
     }
 
     async onMessage(message) {
         if (message.author.bot) return
         let messageAttachment = message.attachments.size > 0 ? message.attachments.first().url : null
-        console.log(messageAttachment)
         this.emojiResponse(message)
         this.memeResponse(message)
         this.aiResponse(message)
@@ -31,9 +29,10 @@ class MessageHandler {
     }
 
     async aiResponse(message) {
+        console.log(message)
         if (message.content.includes(this.discord.client.user.id)) {
-            const messageContent = message.content.replace(`<@${this.discord.client.user.id}>`, '').trim()
-            const aiResp = await this.getGoogleAIMessage(messageContent)
+            message.content = message.content.replace(`<@${this.discord.client.user.id}>`, '').trim()
+            const aiResp = await this.getGoogleAIMessage(message)
             message.reply(aiResp || 'Aga da')
         }
 
@@ -53,6 +52,7 @@ class MessageHandler {
     async getGoogleAIMessage(message) {
         //let messageAttachment = message.attachments.size ? message.attachments.first().url : null;
         let messageContent = message.content;
+        console.log(message)
 
         if (!messageContent) {
             messageContent = 'Вот тебе картинка'
